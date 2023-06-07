@@ -1,0 +1,254 @@
+<form 
+    [formGroup]="settingsForm" 
+    (ngSubmit)="onSubmit()" 
+    class="px-8 pt-6 pb-8 mb-4"
+>
+    <div class="flex mb-4">
+        <div class="w-1/2 px-2">
+            <label for="lengthOptions">Length Options:</label>
+            <select 
+                id="lengthOptions" 
+                formControlName="lengthOptions"
+                class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"    
+            >
+                <option value="random">Random</option>
+                <option value="range">Range</option>
+                <option value="exact">Exact</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="settingsForm.value.lengthOptions === 'range'"> 
+        <div formGroupName="lengthSettings" class="flex mb-4 px-2">
+            <div class="w-1/2 px-2">
+                <label for="minLength">Minimum Length:</label>
+                <input 
+                    id="minLength" 
+                    type="number" 
+                    formControlName="minLength"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+            </div>
+            <div class="w-1/2 px-2">
+                <label for="maxLength">Maximum Length:</label>
+                <input 
+                    id="maxLength" 
+                    type="number" 
+                    formControlName="maxLength" 
+                    (change)="handleIterationsChange($event)"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="settingsForm.value.lengthOptions === 'exact'" class="flex px-2 mb-4"> 
+        <div class="w-full" px-2>
+            <label for="exactLength ">Exact Length:</label>
+            <input 
+                id="exactLength" 
+                type="number" 
+                formControlName="exactLength" 
+                (change)="handleIterationsChange($event)"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+        </div>
+    </div>
+
+    <div *ngIf="shoudShowAdvancedSettings" class="mb-8">
+        <div formGroupName="advancedSettings">
+            <div class="flex mb-4">
+                <div class="w-1/2 px-2">
+                    <label for="Maximim vowels">Maximum Consecutive Vowels:</label>
+                    <input id="maximumVowels" 
+                        type="number" 
+                        formControlName="maxVowels" 
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                </div>
+                <div class="w-1/2 px-2">
+                    <label for="Maximim consonants">Maximum Consecutive Consonants :</label>
+                    <input id="maximumConsonants" 
+                        type="number" 
+                        formControlName="maxConsonants" 
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 px-2">
+                    <label for="yOptions">Y Options:</label>
+                    <select 
+                        id="yOptions" 
+                        formControlName="yOptions"
+                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"    
+                    >
+                        <option value="include">Include</option>
+                        <option value="exclude">Exclude</option>
+                    </select>
+                </div>
+                <div class="w-1/2 px-2">
+                    <label for="iterations">Iterations:</label>
+                    <input id="iterations" 
+                        type="number" 
+                        formControlName="iterations" 
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                </div>
+            </div>
+        </div>
+        <div formGroupName="duplicateSettings">
+        <div class="flex mb-4">
+            <div class="w-1/2 px-2">
+                <label for="allowDuplicateVowels">Allow duplicates vowels:</label>
+                <input id="allowDuplicateVowels" 
+                    type="checkbox" 
+                    formControlName="allowDuplicateVowels" 
+                    class="w-full h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                >
+                <label for="totalDuplicateVowels">Total duplicate vowels:</label>
+                <input id="totalDuplicateVowels" 
+                    type="number" 
+                    formControlName="totalDuplicateVowels" 
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                >
+            </div>
+            <div class="w-1/2 px-2">
+                <label for="allowDuplicateConsonants">Allow duplicates vowels:</label>
+                <input id="allowDuplicateConsonants" 
+                    type="checkbox" 
+                    formControlName="allowDuplicateConsonants" 
+                    class="w-full h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                >
+                <label for="totalDuplicateConsonants">Total duplicate vowels:</label>
+                <input id="totalDuplicateConsonants" 
+                    type="number" 
+                    formControlName="totalDuplicateConsonants" 
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                    >
+            </div>
+        </div>
+        <div class="flex mb-4">
+            <div class="w-1/2 px-2">
+                <label for="allowDuplicateVowels">Allow consecutive duplicate vowels:</label>
+                <input id="allowDuplicateVowels" 
+                    type="checkbox" 
+                    formControlName="allowLimitDuplicateVowels" 
+                    class="w-full h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                >
+                <label for="consecutiveDuplicateVowels">Limit for consecutive duplicate vowels:</label>
+                <input id="consecutiveDuplicateVowels" 
+                    type="number" 
+                    formControlName="consecutiveDuplicateVowels" 
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                >
+            </div>
+            <div class="w-1/2 px-2">
+                <label for="allowDuplicateConsonants">Allow duplicates duplicate consonants:</label>
+                <input id="allowDuplicateConsonants" 
+                    type="checkbox" 
+                    formControlName="allowLimitDuplicateConsonants" 
+                    class="w-full h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                >
+                <label for="consecutiveDuplicateConsonants">Limit for consecutive duplicates vowels:</label>
+                <input id="consecutiveDuplicateConsonants" 
+                    type="number" 
+                    formControlName="consecutiveDuplicateConsonants" 
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                    >
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div *ngIf="shouldShowspecificCharacterSettings && settingsForm.value.lengthOptions !== 'random'" class="mb-8">
+        <div formGroupName="specificCharacterSettings" class="grid grid-cols-3 gap-1">
+            <div *ngFor="let character of addCharacterSettings.controls; let i = index" class="mb-1">
+                <span formArrayName="characterSettings" >
+                    <label for="letterTypes">Rule for letter {{ i + 1 }}</label>
+                    <select
+                        id="letterTypes" 
+                        [formControlName]="i"
+                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option value="" disabled selected>Select a rule for this letter</option>
+                        <option value="vowel">Vowel</option>
+                        <option value="consonant">Consonant</option>
+                        <option value="random">Random letter</option>
+                    </select>
+                </span>
+                <span formArrayName="includeExcludeOptions">
+                    <select
+                        id="granularOptions" 
+                        [formControlName]="i"
+                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option value="" disabled selected>Granular Options</option>
+                        <option value="none">None</option>
+                        <option value="specific">Specific letters ></option>
+                        <option value="exclude">Exclude Letters</option>
+                    </select>
+                </span>
+                <div formArrayName="specificCharacters">
+                    <div ng-disabled="character.value !== 'specific'" (change)="check(character.value)">
+                        <input 
+                            id="specificCharacters" 
+                            [formControlName]="i" 
+                            placeholder="Select characters"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div>
+                <!-- <div formArrayName="specificCharacters">
+                    <div (change)="check(character.value)">
+                        <input 
+                            id="specificCharacters" 
+                            [formControlName]="i" 
+                            placeholder='Specific characters'
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="flex">
+        <div class="w-1/3 px-2">
+            <div *ngIf="settingsForm.value.lengthOptions !== 'random'">    
+                <button 
+                    type="button" 
+                    (click)="onShowspecificCharacterSettings()"
+                    class="bg-white hover:bg-blue-300 font-bold py-2 px-4 border border-gray-800 rounded"
+                >
+                    Character Settings
+                </button>
+            </div>
+        </div>
+        <div class="w-1/3 px-2">
+            <button 
+                type="button" 
+                (click)="onShowAdvancedSettings()"
+                class="bg-white hover:bg-blue-300 font-bold py-2 px-4 border border-gray-800 rounded"
+            >
+                Advanced Settings
+            </button>
+        </div>
+        <div class="w-1/3 px-2 ml-auto">
+            <button 
+                type="'submit" 
+                class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            >
+                Generate
+            </button>
+        </div>
+    </div>
+
+</form>
+
+<app-results-form [results]="results" [iterations]="settingsForm?.value?.advancedSettings?.iterations" />
+
